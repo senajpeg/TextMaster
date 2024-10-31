@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">TextMaster</string>
+    <string name="enter_text">Enter Text</string>
+    <string name="show_options">Options</string>
+    <string name="grammer_check">Grammer check</string>
+    <string name="change_text_style">Change Text Style</string>
+    <string name="result">Result</string>
+    <string name="TextMaster">TextMaster</string>
+    <string name="toinformal">To Informal</string>
+    <string name="toformal">To Formal</string>
+
+</resources>
