@@ -19,7 +19,7 @@ class TextMasterViewModel:ViewModel() {
         viewModelScope.launch {
             try {
                 val prompt="lütfen aşağıdaki metinde dil bilgisi hatalarını düzelt : \"$inputText\""
-                val response = generativeModel.generateContent(prompt)
+                val response = generativeModel.generateContent(prompt) // burada modelimiz çalışıyor ve komuta göre çıktı üretiyor.
                 // response.text nullable olduğu için varsayılan bir değer atanıyor
                 resultText.value = response.text ?: "No response text available"
             } catch (e: Exception) {
