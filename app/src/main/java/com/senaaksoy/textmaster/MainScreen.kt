@@ -11,8 +11,6 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.text.KeyboardActions
-import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
@@ -122,15 +120,17 @@ fun MyScreen(viewModel: TextMasterViewModel = viewModel<TextMasterViewModel>()) 
                 }
             }
             if(showStyleOptions){
-                Button(onClick = { viewModel.convertToInformalStyle(inputText) },
+                Button(onClick = { viewModel.convertToInformalStyle(inputText)
+                    keyboardController?.hide()},
                     colors = ButtonDefaults.buttonColors(containerColor =MaterialTheme.colorScheme.surfaceTint )
                     ) {
                     Text(text = stringResource(id = R.string.toinformal))
                 }
-                Button(onClick = { viewModel.convertToFormalStyle(inputText) },
+                Button(onClick = { viewModel.convertToFormalStyle(inputText)
+                    keyboardController?.hide()},
                     colors = ButtonDefaults.buttonColors(containerColor =MaterialTheme.colorScheme.surfaceTint )
                 ) {
-                    Text(text = stringResource(id = R.string.toformal))
+                    Text(text = stringResource(id =R.string.toformal))
                 }
 
             }
