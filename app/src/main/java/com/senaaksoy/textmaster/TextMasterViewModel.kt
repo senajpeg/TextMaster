@@ -18,7 +18,7 @@ class TextMasterViewModel:ViewModel() {
     fun performGrammarCheck(inputText: String) {
         viewModelScope.launch {
             try {
-                val prompt="lütfen aşağıdaki metinde dil bilgisi hatalarını düzelt : \"$inputText\""
+                val prompt="lütfen aşağıdaki metinde dil bilgisi hatalarını düzelt: \"$inputText\""
                 val response = generativeModel.generateContent(prompt) // burada modelimiz çalışıyor ve komuta göre çıktı üretiyor.
                 // response.text nullable olduğu için varsayılan bir değer atanıyor
                 resultText.value = response.text ?: "No response text available"
@@ -31,7 +31,7 @@ class TextMasterViewModel:ViewModel() {
     fun convertToFormalStyle(inputText: String) {
         viewModelScope.launch {
             try {
-                val prompt = "Lütfen aşağıdaki metni resmi bir tarzda yeniden yaz: \"$inputText\""
+                val prompt = "Lütfen aşağıdaki metni resmi bir tarzda yeniden yaz,cevap verirken farklı öneriler sunmadan direkt en uygun resmi söylenecek cümleyi alıp düzeltilmiş halini yaz: \"$inputText\""
                 val response = generativeModel.generateContent(prompt)
                 resultText.value = response.text ?: "No response text available"
             } catch (e: Exception) {
@@ -42,7 +42,7 @@ class TextMasterViewModel:ViewModel() {
     fun convertToInformalStyle(inputText: String) {
         viewModelScope.launch {
             try {
-                val prompt = "Lütfen aşağıdaki metni daha samimi ve gündelik bir dilde argo kullanmadan yazın:  \"$inputText\""
+                val prompt = "Lütfen aşağıdaki metni daha samimi ve gündelik bir dilde argo kullanmadan yaz,cevap verirken farklı öneriler sunmadan direkt en uygun samimi,gündelik söylenecek cümleyi alıp düzeltilmiş halini yaz:  \"$inputText\""
                 val response = generativeModel.generateContent(prompt)
                 resultText.value = response.text ?: "No response text available"
             } catch (e: Exception) {

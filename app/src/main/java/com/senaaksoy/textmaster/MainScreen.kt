@@ -11,9 +11,12 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.KeyboardActions
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -27,6 +30,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
@@ -41,6 +45,9 @@ fun MyScreen(viewModel: TextMasterViewModel = viewModel<TextMasterViewModel>()) 
     var showOptions by remember { mutableStateOf(false) }
     var showStyleOptions by remember { mutableStateOf(false) }
 
+    val keyboardController = LocalSoftwareKeyboardController.current
+
+
     // Input text değiştiğinde resultText'i sıfırlıyoruz
     LaunchedEffect(inputText) {
         viewModel.resultText.value = "" // inputText her değiştiğinde resultText sıfırlanacak
@@ -51,7 +58,7 @@ fun MyScreen(viewModel: TextMasterViewModel = viewModel<TextMasterViewModel>()) 
             Surface(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .background(color = Color(0xFF9EA6AD))
+                    .background(color =MaterialTheme.colorScheme.surfaceTint)
                     .padding(16.dp),
                 color = Color.Transparent
             ) {
@@ -91,35 +98,37 @@ fun MyScreen(viewModel: TextMasterViewModel = viewModel<TextMasterViewModel>()) 
                         showStyleOptions = false
                         true
                     }        },
-                    colors = ButtonDefaults.buttonColors(contentColor = Color.White, containerColor =Color(0xFF9EA6AD) )
+                    colors = ButtonDefaults.buttonColors( containerColor=MaterialTheme.colorScheme.surfaceTint)
                 ) {
                     Text(text = stringResource(id = R.string.show_options))
                 }
             }
             if (showOptions) {
                 Column(modifier = Modifier.fillMaxWidth()) {
-                    Button(onClick = { viewModel.performGrammarCheck(inputText)},
-                        colors = ButtonDefaults.buttonColors(contentColor = Color.White, containerColor =Color(0xFF9EA6AD) )) {
+                    Button(onClick = { viewModel.performGrammarCheck(inputText)
+                                     keyboardController?.hide()},
+                        colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.surfaceTint )) {
                         Text(text = stringResource(id = R.string.grammer_check))
                     }
                     Button(onClick = {
                                      showOptions=false
                                      showStyleOptions=true
+                        keyboardController?.hide()
 
                     },
-                        colors = ButtonDefaults.buttonColors(contentColor = Color.White, containerColor =Color(0xFF9EA6AD) )) {
+                        colors = ButtonDefaults.buttonColors(containerColor =MaterialTheme.colorScheme.surfaceTint )) {
                         Text(text = stringResource(id = R.string.change_text_style))
                     }
                 }
             }
             if(showStyleOptions){
                 Button(onClick = { viewModel.convertToInformalStyle(inputText) },
-                    colors = ButtonDefaults.buttonColors(contentColor = Color.White, containerColor =Color(0xFF9EA6AD) )
+                    colors = ButtonDefaults.buttonColors(containerColor =MaterialTheme.colorScheme.surfaceTint )
                     ) {
                     Text(text = stringResource(id = R.string.toinformal))
                 }
                 Button(onClick = { viewModel.convertToFormalStyle(inputText) },
-                    colors = ButtonDefaults.buttonColors(contentColor = Color.White, containerColor =Color(0xFF9EA6AD) )
+                    colors = ButtonDefaults.buttonColors(containerColor =MaterialTheme.colorScheme.surfaceTint )
                 ) {
                     Text(text = stringResource(id = R.string.toformal))
                 }

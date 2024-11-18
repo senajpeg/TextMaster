@@ -17,7 +17,6 @@ import com.senaaksoy.textmaster.ui.theme.TextMasterTheme
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
         setContent {
             TextMasterTheme {
                MyScreen()
