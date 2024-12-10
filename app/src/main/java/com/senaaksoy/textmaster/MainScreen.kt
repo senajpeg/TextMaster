@@ -11,10 +11,12 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
+import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.mutableStateOf
@@ -35,6 +37,7 @@ import com.senaaksoy.textmaster.components.MyControl
 import com.senaaksoy.textmaster.viewmodel.TextMasterViewModel
 
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MyScreen(viewModel: TextMasterViewModel = viewModel()) {
 
@@ -72,7 +75,7 @@ fun MyScreen(viewModel: TextMasterViewModel = viewModel()) {
             ) {
                 Text(
                     text = stringResource(id = R.string.TextMaster),
-                    color = Color.White,
+                    color = Color(0xFF5F99B6),
                     fontWeight = FontWeight.Bold,
                     fontStyle = FontStyle.Italic,
                     fontSize = 24.sp
@@ -98,7 +101,8 @@ fun MyScreen(viewModel: TextMasterViewModel = viewModel()) {
                         .padding(top = 16.dp, bottom = 32.dp, start = 32.dp, end = 32.dp)
                         .shadow(elevation = 4.dp),
                     shape = RoundedCornerShape(16.dp),
-                    singleLine = false
+                    singleLine = false,
+                    colors = TextFieldDefaults.textFieldColors(containerColor = Color(0xFF5F99B6))
                 )
                 Row(modifier = Modifier
                     .fillMaxWidth(), horizontalArrangement = Arrangement.Center) {
@@ -111,7 +115,8 @@ fun MyScreen(viewModel: TextMasterViewModel = viewModel()) {
                         .fillMaxWidth()
                         .padding(top = 32.dp),
                     shadowElevation = 4.dp,
-                    shape = RoundedCornerShape(16.dp)
+                    shape = RoundedCornerShape(16.dp),
+                    color = Color(0xFF5F99B6)
                 ) {
                     viewModel.ShowResultTextCheck()
                 }
