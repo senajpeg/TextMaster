@@ -8,5 +8,13 @@
     <string name="TextMaster">TextMaster</string>
     <string name="toinformal">To Informal</string>
     <string name="toformal">To Formal</string>
+    <string name="completeText">Complate the text</string>
+    <string name="createText">Create new text</string>
+    <string name="answerthequestion">Question and Answer</string>
+    <string name="uploadFile">Upload File</string>
+    <string name="summarize_the_text">Summarize the text</string>
+    <string name="answer_the_question">Answer the question</string>
+    <string name="translate">Translate</string>
+    <string name="generate_code">Generate Code</string>
 
 </resources>

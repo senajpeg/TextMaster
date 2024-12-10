@@ -55,7 +55,6 @@ fun TextMasterTheme(
     if (context is Activity) {
         val window = context.window
         // Durum çubuğu rengini ayarla
-        window.statusBarColor = colorScheme.surfaceTint.toArgb()
         // Durum çubuğu ikonları açık/koyu tema uyumlu olsun
         WindowCompat.getInsetsController(window, window.decorView).isAppearanceLightStatusBars = !darkTheme
     }

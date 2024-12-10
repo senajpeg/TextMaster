@@ -58,6 +58,9 @@ dependencies {
     //google ai
     implementation(libs.generativeai)
 
+    //iText
+    implementation(libs.itext7.core)
+
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.activity.compose)
