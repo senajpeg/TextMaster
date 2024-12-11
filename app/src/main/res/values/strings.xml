@@ -16,5 +16,6 @@
     <string name="answer_the_question">Answer the question</string>
     <string name="translate">Translate</string>
     <string name="generate_code">Generate Code</string>
+    <string name="made_by_senaaksoy">Made by Sena Aksoy</string>
 
 </resources>

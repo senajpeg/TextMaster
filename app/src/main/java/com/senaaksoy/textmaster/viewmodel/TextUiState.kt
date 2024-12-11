@@ -7,5 +7,6 @@ data class TextUiState(
     val showStyleOptions : Boolean=false,
     val showFileOptions : Boolean=false,
     var fileUri : Uri? =null,
+    val isLoading: Boolean = false
 
 )

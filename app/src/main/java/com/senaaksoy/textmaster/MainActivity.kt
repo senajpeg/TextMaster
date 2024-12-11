@@ -6,6 +6,8 @@ import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
+import com.senaaksoy.textmaster.navigation.TextNavigation
+import com.senaaksoy.textmaster.textScreens.HomeScreen
 import com.senaaksoy.textmaster.ui.theme.TextMasterTheme
 
 class MainActivity : ComponentActivity() {
@@ -14,7 +16,7 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             TextMasterTheme {
-               MyScreen()
+               TextNavigation()
             }
         }
     }
@@ -26,6 +28,6 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun MyScreenPreview() {
     TextMasterTheme {
-        MyScreen()
+       TextNavigation()
     }
 }

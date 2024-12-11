@@ -51,6 +51,14 @@ class TextMasterViewModel:ViewModel() {
      inputText=newInputText
      }
 
+    private fun setLoadingState(loading:Boolean){
+        _uiState.update { currentState->
+            currentState.copy(
+                isLoading = loading
+            )
+
+        }
+    }
 
     fun optionsButtonCheck(){
      if(_uiState.value.showOptions) {
@@ -77,8 +85,6 @@ class TextMasterViewModel:ViewModel() {
             )
         }
     }
-
-
 
     fun translateButtonCheck(){
         translateThetext(inputText)
@@ -150,16 +156,19 @@ fun generateCodeButtonCheck(){
         )
     }
 }
-    private fun generateCode(inputText: String){
+    private fun generateCode(inputText: String) {
         viewModelScope.launch {
-        try {
-            val prompt = "Lütfen aşağıdaki metni kullanıcının belirttiği dilinde bir kod parçası olarak yaz: \"$inputText\""
-            val response = generativeModel.generateContent(prompt)
-            resultText.value = response.text ?: "No response text available"
-        } catch (e: Exception) {
-            resultText.value = "Error: ${e.message}"
+            try {
+                setLoadingState(true) // Animasyonu başlat
+                val prompt = "Lütfen aşağıdaki metni bir kod parçası olarak yaz: \"$inputText\""
+                val response = generativeModel.generateContent(prompt)
+                resultText.value = response.text ?: "No response text available"
+            } catch (e: Exception) {
+                resultText.value = "Error: ${e.message}"
+            } finally {
+                setLoadingState(false) // Animasyonu durdur
+            }
         }
-    }
     }
     // Extract text from PDF
     fun extractTextFromPdf(context: Context, uri: Uri) {
@@ -187,36 +196,46 @@ fun generateCodeButtonCheck(){
         }
         return stringBuilder.toString()
     }
-    private fun translateThetext(inputText: String){
+    private fun translateThetext(inputText: String) {
         viewModelScope.launch {
             try {
-                val prompt="lütfen aşağıdaki metni kullanıcının belirttiği dile çevir: \"$inputText\""
-                val response = generativeModel.generateContent(prompt) // burada modelimiz çalışıyor ve komuta göre çıktı üretiyor.
-                // response.text nullable olduğu için varsayılan bir değer atanıyor
+                setLoadingState(true) // Animasyonu başlat
+                val prompt = "lütfen aşağıdaki metni kullanıcının belirttiği dile çevir: \"$inputText\""
+                val response = generativeModel.generateContent(prompt)
                 resultText.value = response.text ?: "No response text available"
             } catch (e: Exception) {
                 resultText.value = "Error: ${e.message}"
+            } finally {
+                setLoadingState(false) // Animasyonu durdur
             }
         }
     }
     fun summarizeText() {
         viewModelScope.launch {
             try {
+                setLoadingState(true) // Animasyonu başlat
                 val prompt = "Lütfen aşağıdaki metni kısaca özetle: \"${extractedText.value}\""
                 val response = generativeModel.generateContent(prompt)
                 resultText.value = response.text ?: "No response text available"
             } catch (e: Exception) {
                 resultText.value = "Error: ${e.message}"
+            } finally {
+                setLoadingState(false) // Animasyonu durdur
             }
         }
-    } fun generateQuestionAnswer() {
+    }
+
+    fun generateQuestionAnswer() {
         viewModelScope.launch {
             try {
+                setLoadingState(true) // Animasyonu başlat
                 val prompt = "Lütfen sorduğum soruyu metnin içindeki cümlelere göre cevapla,sadece o soruyu ilgilendiren kısmı yaz: \"${extractedText.value}\""
                 val response = generativeModel.generateContent(prompt)
                 resultText.value = response.text ?: "No response text available"
             } catch (e: Exception) {
                 resultText.value = "Error: ${e.message}"
+            } finally {
+                setLoadingState(false) // Animasyonu durdur
             }
         }
     }
@@ -224,70 +243,88 @@ fun generateCodeButtonCheck(){
     private fun performGrammarCheck(inputText: String) {
         viewModelScope.launch {
             try {
-                val prompt="lütfen aşağıdaki metinde dil bilgisi hatalarını düzelt: \"$inputText\""
-                val response = generativeModel.generateContent(prompt) // burada modelimiz çalışıyor ve komuta göre çıktı üretiyor.
-                // response.text nullable olduğu için varsayılan bir değer atanıyor
-                resultText.value = response.text ?: "No response text available"
-            } catch (e: Exception) {
-                resultText.value = "Error: ${e.message}"
-            }
-        }
-    }
-
-    fun convertToFormalStyle(inputText: String) {
-        viewModelScope.launch {
-            try {
-                val prompt = "Lütfen aşağıdaki metni resmi bir tarzda yeniden yaz,cevap verirken farklı öneriler sunmadan direkt en uygun resmi söylenecek cümleyi alıp düzeltilmiş halini yaz: \"$inputText\""
+                setLoadingState(true) // Animasyonu başlat
+                val prompt = "lütfen aşağıdaki metinde dil bilgisi hatalarını düzelt: \"$inputText\""
                 val response = generativeModel.generateContent(prompt)
                 resultText.value = response.text ?: "No response text available"
             } catch (e: Exception) {
                 resultText.value = "Error: ${e.message}"
+            } finally {
+                setLoadingState(false) // Animasyonu durdur
+            }
+        }
+    }
+
+
+    fun convertToFormalStyle(inputText: String) {
+        viewModelScope.launch {
+            try {
+                setLoadingState(true) // Animasyonu başlat
+                val prompt = "Lütfen aşağıdaki metni resmi bir tarzda yeniden yaz: \"$inputText\""
+                val response = generativeModel.generateContent(prompt)
+                resultText.value = response.text ?: "No response text available"
+            } catch (e: Exception) {
+                resultText.value = "Error: ${e.message}"
+            } finally {
+                setLoadingState(false) // Animasyonu durdur
             }
         }
     }
     fun convertToInformalStyle(inputText: String) {
         viewModelScope.launch {
             try {
-                val prompt = "Lütfen aşağıdaki metni daha samimi ve gündelik bir dilde argo kullanmadan yaz,cevap verirken farklı öneriler sunmadan direkt en uygun samimi,gündelik söylenecek cümleyi alıp düzeltilmiş halini yaz:  \"$inputText\""
+                setLoadingState(true) // Animasyonu başlat
+                val prompt = "Lütfen aşağıdaki metni daha samimi bir dilde yaz: \"$inputText\""
                 val response = generativeModel.generateContent(prompt)
                 resultText.value = response.text ?: "No response text available"
             } catch (e: Exception) {
                 resultText.value = "Error: ${e.message}"
+            } finally {
+                setLoadingState(false) // Animasyonu durdur
             }
         }
     }
-   private fun completeThetext(inputText: String){
+    private fun completeThetext(inputText: String) {
         viewModelScope.launch {
             try {
+                setLoadingState(true) // Animasyonu başlat
                 val prompt = "Lütfen girilen metni mantıklı bir şekilde tamamla: \"$inputText\""
                 val response = generativeModel.generateContent(prompt)
                 resultText.value = response.text ?: "No response text available"
             } catch (e: Exception) {
                 resultText.value = "Error: ${e.message}"
+            } finally {
+                setLoadingState(false) // Animasyonu durdur
             }
         }
     }
 
-    private fun createNewText(inputText: String){
+    private fun createNewText(inputText: String) {
         viewModelScope.launch {
             try {
-                val prompt = "Lütfen aşağıdaki başlığa uygun yaratıcı bir hikaye veya metin yaz: \"$inputText\""
+                setLoadingState(true) // Animasyonu başlat
+                val prompt = "Lütfen aşağıdaki başlığa uygun yaratıcı bir metin yaz: \"$inputText\""
                 val response = generativeModel.generateContent(prompt)
                 resultText.value = response.text ?: "No response text available"
             } catch (e: Exception) {
                 resultText.value = "Error: ${e.message}"
+            } finally {
+                setLoadingState(false) // Animasyonu durdur
             }
         }
     }
 
-    private fun questionandAnswer(inputText: String){
+    private fun questionandAnswer(inputText: String) {
         viewModelScope.launch {
             try {
-                val prompt = "Lütfen aşağıdaki soruya doğru ve anlamlı bir cevap ver: \"$inputText\""
+                setLoadingState(true) // Animasyonu başlat
+                val prompt = "Lütfen aşağıdaki soruya doğru bir cevap ver: \"$inputText\""
                 val response = generativeModel.generateContent(prompt)
                 resultText.value = response.text ?: "No response text available"
             } catch (e: Exception) {
                 resultText.value = "Error: ${e.message}"
+            } finally {
+                setLoadingState(false) // Animasyonu durdur
             }
         }
     }

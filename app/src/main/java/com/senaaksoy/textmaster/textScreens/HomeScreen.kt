@@ -1,4 +1,8 @@
-package com.senaaksoy.textmaster
+package com.senaaksoy.textmaster.textScreens
+
+import androidx.activity.compose.BackHandler
+import com.senaaksoy.textmaster.R
+
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -32,14 +36,17 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
-import com.senaaksoy.textmaster.components.myButton
+import com.senaaksoy.textmaster.components.MyButton
 import com.senaaksoy.textmaster.components.MyControl
 import com.senaaksoy.textmaster.viewmodel.TextMasterViewModel
 
 
+
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun MyScreen(viewModel: TextMasterViewModel = viewModel()) {
+fun HomeScreen(viewModel: TextMasterViewModel = viewModel()) {
+
+    BackHandler {}
 
     val keyboardController = LocalSoftwareKeyboardController.current
 
@@ -56,7 +63,6 @@ fun MyScreen(viewModel: TextMasterViewModel = viewModel()) {
             }
         }
     }
-
     Scaffold(
         topBar = {
             Surface(
@@ -106,8 +112,10 @@ fun MyScreen(viewModel: TextMasterViewModel = viewModel()) {
                 )
                 Row(modifier = Modifier
                     .fillMaxWidth(), horizontalArrangement = Arrangement.Center) {
-                    myButton(text = R.string.show_options, onClickAction = {viewModel.optionsButtonCheck()
-                        keyboardController?.hide()})
+                    MyButton(text = R.string.show_options,
+                        onClickAction = {viewModel.optionsButtonCheck()
+                            keyboardController?.hide()},
+                        iconId = R.drawable.ic_sparkles)
                 }
                 MyControl()
                 Surface(
